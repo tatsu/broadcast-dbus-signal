@@ -2,6 +2,8 @@
 *.o
 *.ko
 
+.idea
+
 # Libraries
 *.lib
 *.a
