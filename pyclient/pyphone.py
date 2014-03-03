@@ -13,12 +13,13 @@ if __name__ == '__main__':
     dbml = DBusGMainLoop(set_as_default=True)
 
     bus = dbus.SessionBus()
-    proxy = bus.get_object('test.signal.source',
-        '/test/signal/Object')
+    proxy = bus.get_object('com.linphone.source',
+        '/com/linphone/Notification/object')
 
-    proxy.connect_to_signal('Test', handle_notification)
+    proxy.connect_to_signal('sip', handle_notification)
     loop = gobject.MainLoop()
 
     dbus.set_default_main_loop(dbml)
 
     loop.run()
+

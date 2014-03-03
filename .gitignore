@@ -21,3 +21,8 @@
 
 # IDE
 *.kdev
+
+kdev4
+*.kdev4
+*.py~
+
