@@ -25,7 +25,7 @@ void sendsignal(char* sigvalue)
    dbus_error_init(&err);
 
    // connect to the DBUS system bus, and check for errors
-   conn = dbus_bus_get(DBUS_BUS_SESSION, &err);
+   conn = dbus_bus_get(DBUS_BUS_SYSTEM, &err);
    if (dbus_error_is_set(&err)) { 
       fprintf(stderr, "Connection Error (%s)\n", err.message); 
       dbus_error_free(&err); 
@@ -35,19 +35,19 @@ void sendsignal(char* sigvalue)
    }
 
    // register our name on the bus, and check for errors
-   ret = dbus_bus_request_name(conn, "com.linphone.source", DBUS_NAME_FLAG_REPLACE_EXISTING , &err);
+   ret = dbus_bus_request_name(conn, "test.signal.sink", DBUS_NAME_FLAG_ALLOW_REPLACEMENT , &err);
    if (dbus_error_is_set(&err)) { 
       fprintf(stderr, "Name Error (%s)\n", err.message); 
       dbus_error_free(&err); 
    }
-   if (DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER != ret) { 
+   if (DBUS_REQUEST_NAME_REPLY_IN_QUEUE != ret) {
       exit(1);
    }
    while (true) {
       // create a signal & check for errors 
-      msg = dbus_message_new_signal("/com/linphone/Notification/object", // object name of the signal
-				    "com.linphone.Notification", // interface name of the signal
-				    "sip"); // name of the signal
+      msg = dbus_message_new_signal("/test/signal/Object", // object name of the signal
+				    "test.signal.Type", // interface name of the signal
+				    "Test"); // name of the signal
       if (NULL == msg) 
       { 
 	  fprintf(stderr, "Message Null\n"); 
